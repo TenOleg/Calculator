@@ -20,15 +20,30 @@ public class NumberService {
     }
 
     static Number parseAndValidate(String symbol) throws Exception {
+
         int value;
         NumberType type;
 
         try {
             value = Integer.parseInt(symbol);
             type = NumberType.ARABIC;
-        }catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
+            char[] chars = symbol.toCharArray();
+            int counts;
+
+            int n = symbol.length();
+            for (int i = 1; i < n; i++) {
+                counts = 1;
+                for (int j = 0; j < n; j++) {
+                    if (j != i && chars[i] == chars[j]) counts++;
+                }
+                if (counts == 4 || chars[0] == chars[1]) {
+                    throw new Exception("Такой римской цифры не существует");
+                }
+            }
             value = toArabicNumber(symbol);
             type = NumberType.ROMAN;
+
         }
 
         if (value < 1 || value > 10) {
@@ -51,7 +66,7 @@ public class NumberService {
 
         int result = -1;
 
-        for (Map.Entry < Integer, String > entry: romanString.entrySet()) {
+        for (Map.Entry<Integer, String> entry : romanString.entrySet()) {
             if (entry.getValue().equals(String.valueOf(letter))) result = entry.getKey();
         }
         return result;
@@ -80,13 +95,12 @@ public class NumberService {
             i++;
             if (i == roman.length()) {
                 result += num;
-            }else {
+            } else {
                 int nextNum = letterToNumber(roman.charAt(i));
-                if(nextNum > num) {
+                if (nextNum > num) {
                     result += (nextNum - num);
                     i++;
-                }
-                else result += num;
+                } else result += num;
             }
         }
         return result;

@@ -11,17 +11,18 @@ public class Main {
 
         while (true) {
 
-            System.out.println("Input: ");
-            String line = scanner.nextLine();
+            System.out.println("Ввод: ");
+            String line = scanner.nextLine().toUpperCase();
 
-            if (line.equals("exit")) {
+            if (line.equals("ВЫХОД")) {
                 exitCalc();
                 break;
             }
 
             try {
                 String[] symbols = line.split(" ");
-                if (symbols.length != 3) throw new Exception("잘 못 입력했습니다.");
+                if (symbols.length != 3) throw new Exception("Вы ввели не правильно");
+
                 Number firstNumber = NumberService.parseAndValidate(symbols[0]);
                 Number secondNumber = NumberService.parseAndValidate(symbols[2], firstNumber.getType());
                 String result = OperationService.calculate(firstNumber, secondNumber, symbols[1]);
@@ -43,7 +44,7 @@ public class Main {
 
     private static void exitCalc() {
 
-        System.out.println("До скорых встреч!");
+        System.out.println("Адъиос!!!");
 
     }
 }
