@@ -26,7 +26,7 @@ public class Main {
                 Number firstNumber = NumberService.parseAndValidate(symbols[0]);
                 Number secondNumber = NumberService.parseAndValidate(symbols[2], firstNumber.getType());
                 String result = OperationService.calculate(firstNumber, secondNumber, symbols[1]);
-                System.out.println("Output: \n" + result);
+                System.out.println("Вывод: \n" + result);
 
             } catch (Exception e) {
                 System.out.println(e.getMessage());
